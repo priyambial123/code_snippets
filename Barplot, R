@@ -1,0 +1,35 @@
+df_plot <- data.frame(
+  perturbations = c("OE of AP", "OE of AP", "OE of AP", "OE of AP", "OE of AP2", "OE of AP2","OE of AP2","OE of AP2","OE of AP, F3", "OE of AP, F3", "OE of AP, F3", "OE of AP, F3", "OE of AP, F4", "OE of AP, F4", "OE of AP, F4", "OE of AP, F4", "OE of AP2, F4", "OE of AP2, F4","OE of AP2, F4","OE of AP2, F4","OE of AP, F9 ", "OE of AP, F9 ", "OE of AP, F9 ", "OE of AP, F9 ", "OE of AP2, F9 ",  "OE of AP2, F9 ",  "OE of AP2, F9 ",  "OE of AP2, F9 "),
+  No_of_simulations = c(70, 1000, 5000, 10000, 70, 1000, 5000, 10000, 70, 1000, 5000, 10000, 70, 1000, 5000, 10000, 70, 1000, 5000, 10000, 70, 1000, 5000, 10000, 70, 1000, 5000, 10000), 
+  Mean =c(0.36, 0.3,0.3,0.33, 0.34, 0.31, 0.31, 0.32, 0.42, 0.33, 0.31, 0.31, 0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 0.98, 0.56, 0.46, 0.49, 0.49, 0.46, 0.51, 0.49, 0.5), SD= c(0.04, 0.03, 0.04,0.04,0.05, 0.04, 0.04,                                                                                                                                                                               0.04,
+                                                                                                                                                                                0.05,
+                                                                                                                                                                                  0.04,
+                                                                                                                                                                                  0.04,
+                                                                                                                                                                                  0.04,
+                                                                                                                                                                                  0.13,
+                                                                                                                                                                                  0.13,
+                                                                                                                                                                                  0.14,
+                                                                                                                                                                                  0.14,
+                                                                                                                                                                                  0.13,
+                                                                                                                                                                                  0.13,
+                                                                                                                                                                                  0.13,
+                                                                                                                                                                                  0.13,
+                                                                                                                                                                                  0.07,
+                                                                                                                                                                                  0.06,
+                                                                                                                                                                                  0.07,
+                                                                                                                                                                                  0.06,
+                                                                                                                                                                                  0.07,
+                                                                                                                                                                                  0.07,
+                                                                                                                                                                                  0.07,
+                                                                                                                                                                                  0.07), stringsAsFactors = FALSE)
+                                                                                                                                                                                  
+                                                                                                                                                                                  
+                                                                                                                                                                                  
+                                                                                                                                                                                  
+df2 <- df_plot[-c(1,5,9,13,17, 21,25),]#deleted rows 1, 5,9,13, 17, 21,25
+library(plyr)
+library(ggplot2)
+ggplot(df2, aes(x = No_of_simulations, y = Mean)) +
+  geom_bar(stat = "identity") + facet_wrap(.~perturbations) +
+  ggtitle("Perturbations") + ylab("Mean breaks") +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD), width = 0.1)
