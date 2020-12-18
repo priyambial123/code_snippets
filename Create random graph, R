@@ -1,0 +1,79 @@
+#Step1: create vector of degree for each gene (N=128).
+#Create random graph by vl and simple.no.multiple method
+#Step2: convert graph to matrix and add column and row names
+#Step3: convert values greater than or equal to 1 as 1 in the matrix.
+#step4: use matrix for graph theory analysis
+
+library("igraph")
+#step1:
+degrees <- c( 4,        2,        4,        2,        1,        3,        1,        8, 
+                      24,        4,        1,        2,        3,        1,        1,        1, 
+                      6,        6,        5,        2,        4,        3,        7,        1,      1,        3,        2,        1,        1,        1,        1,        1, 1,        1,        1,        2,        1,        5,        3,        1,
+                      1,        1,        1,        2,        1,        1,        1,        1,
+                      1,        1,        1,        1,        1,        1,        1,        1,
+                      1,        1,        3,        1,        1,        1,        3,        1,
+                      1,        2,        2,        1,        1,        1,        3,        1,
+                      5,        1,        1,       2,        1,        3,        1,        1,
+                      2,        1,        1,        1,        2,        2,        2,        1,
+                      1,        5,        2,        2,        4,        1,        1,        1,
+                      1,        2,        3,        8,        1,        1,        2,        1,
+                      1,        1,        1,        6,        6,        3,        2,        1,
+                      1,        1,        1,        1,        1,        1,        4,        2,
+                      1,        1,        3,        2,        1,        3,        2,        2,
+                      1,        1,        1,        2,        2,        1)
+                      
+# create random graph by vl and simple.no.multiple method                  
+g_simple <- sample_degseq(degrees, method = "simple.no.multiple")
+g_vl <- sample_degseq(degrees, method = "vl")
+edges<-as_edgelist(g_vl)
+
+
+# graph can be visualized by adding gene names
+simple <- get.adjacency(g_simple)# simple method
+V(g_simple)$label = c("ADORA2A", "AKT1", "BDNF", "CACNA1C",	"CHRNA4", "CNTNAP2", "DAOA",	"DCC", "DISC1", "DLG2", "DRD2", "DTNBP1", "FOXP2", "GABRB1", "GAD67", "GNAO1", "GRIN2A", "GRM5", "GSK3B", "IL3", "MIR137", "MYT1L", "NEUROG1", "NOS3", "NPTN", "NRG1", "NRXN1", "PCM1", "PRNP", "RAB18", "RELN", "SEMA5A", "SLC1A2", "SLC6A4", "TP53", "TPH2",	"TRAX", "YWHAE", 	"ACTB", "ACTN1", "ACTN2", "ACTN3", "ACTN4", "ADCYAP1", "AKAP79", "APH1B", "ARNT2", "ASCL1", "AXIN2", "CAM", "CCDC88A", "CDK5", "CHD7", "CHL1", "CHN1", "CTNNB1", "DAO", "DCX", "DIXDC1", 	"DLG1", "DLG4","DRD1", "DSCAM", "DYRK1A", "ERBB2", "ERBB4", "EXOC1", "FAK", "FEZ1", "FEZF2", "FGFR1", "FRAT1", "FYN", "GAD65", "GPHN", "GPR37", "GRASP", "GRB2", "GRIA1", "GRIN1", "HAP1", "HELT", "HES1", "HIF1A", "HTT", "ITPR1", "ITPR3", "JUN", "KCNJ14", "KIF5A", "LSD1", "MADD2", "MASH1", "MEF2C", "MIR128", "MIR132", "MIR9", "MUPP1", "NDE1", "NDEL1","NEUROG2","NKX2-2", "NLGN1", "NOS3AS", "NOTCH1", "NPAS4", "NSF", "NTN1", "PAFAH1B1", "PDE4B", "PK2",	"PKD", "PLXNA2", "RAB3GAP1", "SHANK3", "SIAH1", "SOX2", "SRR", "STX1A", "TLX", "TNIK", "TSN",	"TUBB3", "VAMP7", "VLIP1", "ZNF365", "ZNF385A", "GRIN2B", "NECAB2", "TBX3", "KLF4", "RGS4", "PHOX2B", "HER5")
+plot(g_simple, main="With Labels")
+get.adjacency(g_vl)# vl method
+V(g_vl)$label = c("ADORA2A", "AKT1", "BDNF", "CACNA1C",	"CHRNA4", "CNTNAP2", "DAOA",	"DCC", "DISC1", "DLG2", "DRD2", "DTNBP1", "FOXP2", "GABRB1", "GAD67", "GNAO1", "GRIN2A", "GRM5", "GSK3B", "IL3", "MIR137", "MYT1L", "NEUROG1", "NOS3", "NPTN", "NRG1", "NRXN1", "PCM1", "PRNP", "RAB18", "RELN", "SEMA5A", "SLC1A2", "SLC6A4", "TP53", "TPH2",	"TRAX", "YWHAE", 	"ACTB", "ACTN1", "ACTN2", "ACTN3", "ACTN4", "ADCYAP1", "AKAP79", "APH1B", "ARNT2", "ASCL1", "AXIN2", "CAM", "CCDC88A", "CDK5", "CHD7", "CHL1", "CHN1", "CTNNB1", "DAO", "DCX", "DIXDC1", 	"DLG1", "DLG4","DRD1", "DSCAM", "DYRK1A", "ERBB2", "ERBB4", "EXOC1", "FAK", "FEZ1", "FEZF2", "FGFR1", "FRAT1", "FYN", "GAD65", "GPHN", "GPR37", "GRASP", "GRB2", "GRIA1", "GRIN1", "HAP1", "HELT", "HES1", "HIF1A", "HTT", "ITPR1", "ITPR3", "JUN", "KCNJ14", "KIF5A", "LSD1", "MADD2", "MASH1", "MEF2C", "MIR128", "MIR132", "MIR9", "MUPP1", "NDE1", "NDEL1","NEUROG2","NKX2-2", "NLGN1", "NOS3AS", "NOTCH1", "NPAS4", "NSF", "NTN1", "PAFAH1B1", "PDE4B", "PK2",	"PKD", "PLXNA2", "RAB3GAP1", "SHANK3", "SIAH1", "SOX2", "SRR", "STX1A", "TLX", "TNIK", "TSN",	"TUBB3", "VAMP7", "VLIP1", "ZNF365", "ZNF385A", "GRIN2B", "NECAB2", "TBX3", "KLF4", "RGS4", "PHOX2B", "HER5")
+plot(g_vl, main="With Labels")
+plot(g_vl)
+
+
+# Step2: convert graph (by simple method) to matrix and add row and column names                       
+matrix_simple <- as_adjacency_matrix(g_simple, type = c("both"), attr = NULL,
+                                     edges = TRUE, names = TRUE, sparse = FALSE)
+rownames(matrix_simple) <- c("ADORA2A", "AKT1", "BDNF", "CACNA1C",	"CHRNA4", "CNTNAP2", "DAOA",	"DCC", "DISC1", "DLG2", "DRD2", "DTNBP1", "FOXP2", "GABRB1", "GAD67", "GNAO1", "GRIN2A", "GRM5", "GSK3B", "IL3", "MIR137", "MYT1L", "NEUROG1", "NOS3", "NPTN", "NRG1", "NRXN1", "PCM1", "PRNP", "RAB18", "RELN", "SEMA5A", "SLC1A2", "SLC6A4", "TP53", "TPH2",	"TRAX", "YWHAE", 	"ACTB", "ACTN1", "ACTN2", "ACTN3", "ACTN4", "ADCYAP1", "AKAP79", "APH1B", "ARNT2", "ASCL1", "AXIN2", "CAM", "CCDC88A", "CDK5", "CHD7", "CHL1", "CHN1", "CTNNB1", "DAO", "DCX", "DIXDC1", 	"DLG1", "DLG4","DRD1", "DSCAM", "DYRK1A", "ERBB2", "ERBB4", "EXOC1", "FAK", "FEZ1", "FEZF2", "FGFR1", "FRAT1", "FYN", "GAD65", "GPHN", "GPR37", "GRASP", "GRB2", "GRIA1", "GRIN1", "HAP1", "HELT", "HES1", "HIF1A", "HTT", "ITPR1", "ITPR3", "JUN", "KCNJ14", "KIF5A", "LSD1", "MADD2", "MASH1", "MEF2C", "MIR128", "MIR132", "MIR9", "MUPP1", "NDE1", "NDEL1","NEUROG2","NKX2-2", "NLGN1", "NOS3AS", "NOTCH1", "NPAS4", "NSF", "NTN1", "PAFAH1B1", "PDE4B", "PK2",	"PKD", "PLXNA2", "RAB3GAP1", "SHANK3", "SIAH1", "SOX2", "SRR", "STX1A", "TLX", "TNIK", "TSN",	"TUBB3", "VAMP7", "VLIP1", "ZNF365", "ZNF385A", "GRIN2B", "NECAB2", "TBX3", "KLF4", "RGS4", "PHOX2B", "HER5")
+colnames(matrix_simple) <- c("ADORA2A", "AKT1", "BDNF", "CACNA1C",	"CHRNA4", "CNTNAP2", "DAOA",	"DCC", "DISC1", "DLG2", "DRD2", "DTNBP1", "FOXP2", "GABRB1", "GAD67", "GNAO1", "GRIN2A", "GRM5", "GSK3B", "IL3", "MIR137", "MYT1L", "NEUROG1", "NOS3", "NPTN", "NRG1", "NRXN1", "PCM1", "PRNP", "RAB18", "RELN", "SEMA5A", "SLC1A2", "SLC6A4", "TP53", "TPH2",	"TRAX", "YWHAE", 	"ACTB", "ACTN1", "ACTN2", "ACTN3", "ACTN4", "ADCYAP1", "AKAP79", "APH1B", "ARNT2", "ASCL1", "AXIN2", "CAM", "CCDC88A", "CDK5", "CHD7", "CHL1", "CHN1", "CTNNB1", "DAO", "DCX", "DIXDC1", 	"DLG1", "DLG4","DRD1", "DSCAM", "DYRK1A", "ERBB2", "ERBB4", "EXOC1", "FAK", "FEZ1", "FEZF2", "FGFR1", "FRAT1", "FYN", "GAD65", "GPHN", "GPR37", "GRASP", "GRB2", "GRIA1", "GRIN1", "HAP1", "HELT", "HES1", "HIF1A", "HTT", "ITPR1", "ITPR3", "JUN", "KCNJ14", "KIF5A", "LSD1", "MADD2", "MASH1", "MEF2C", "MIR128", "MIR132", "MIR9", "MUPP1", "NDE1", "NDEL1","NEUROG2","NKX2-2", "NLGN1", "NOS3AS", "NOTCH1", "NPAS4", "NSF", "NTN1", "PAFAH1B1", "PDE4B", "PK2",	"PKD", "PLXNA2", "RAB3GAP1", "SHANK3", "SIAH1", "SOX2", "SRR", "STX1A", "TLX", "TNIK", "TSN",	"TUBB3", "VAMP7", "VLIP1", "ZNF365", "ZNF385A", "GRIN2B", "NECAB2", "TBX3", "KLF4", "RGS4", "PHOX2B", "HER5")
+setwd("C://Users//Priya//Desktop//graph_theory_analysis//graph_theory-prenatal")
+csv <- write.csv(matrix_simple, "matrix_simple.csv")
+
+
+# convert graph (by vl method) to matrix; add row and column names                        
+matrix_vl <- as_adjacency_matrix(g_vl, type = c("both"), attr = NULL,
+                                 edges = TRUE, names = TRUE, sparse = FALSE)
+
+rownames(matrix_vl) <- c("ADORA2A", "AKT1", "BDNF", "CACNA1C",	"CHRNA4", "CNTNAP2", "DAOA",	"DCC", "DISC1", "DLG2", "DRD2", "DTNBP1", "FOXP2", "GABRB1", "GAD67", "GNAO1", "GRIN2A", "GRM5", "GSK3B", "IL3", "MIR137", "MYT1L", "NEUROG1", "NOS3", "NPTN", "NRG1", "NRXN1", "PCM1", "PRNP", "RAB18", "RELN", "SEMA5A", "SLC1A2", "SLC6A4", "TP53", "TPH2",	"TRAX", "YWHAE", 	"ACTB", "ACTN1", "ACTN2", "ACTN3", "ACTN4", "ADCYAP1", "AKAP79", "APH1B", "ARNT2", "ASCL1", "AXIN2", "CAM", "CCDC88A", "CDK5", "CHD7", "CHL1", "CHN1", "CTNNB1", "DAO", "DCX", "DIXDC1", 	"DLG1", "DLG4","DRD1", "DSCAM", "DYRK1A", "ERBB2", "ERBB4", "EXOC1", "FAK", "FEZ1", "FEZF2", "FGFR1", "FRAT1", "FYN", "GAD65", "GPHN", "GPR37", "GRASP", "GRB2", "GRIA1", "GRIN1", "HAP1", "HELT", "HES1", "HIF1A", "HTT", "ITPR1", "ITPR3", "JUN", "KCNJ14", "KIF5A", "LSD1", "MADD2", "MASH1", "MEF2C", "MIR128", "MIR132", "MIR9", "MUPP1", "NDE1", "NDEL1","NEUROG2","NKX2-2", "NLGN1", "NOS3AS", "NOTCH1", "NPAS4", "NSF", "NTN1", "PAFAH1B1", "PDE4B", "PK2",	"PKD", "PLXNA2", "RAB3GAP1", "SHANK3", "SIAH1", "SOX2", "SRR", "STX1A", "TLX", "TNIK", "TSN",	"TUBB3", "VAMP7", "VLIP1", "ZNF365", "ZNF385A", "GRIN2B", "NECAB2", "TBX3", "KLF4", "RGS4", "PHOX2B", "HER5")
+colnames(matrix_vl) <-c("ADORA2A", "AKT1", "BDNF", "CACNA1C",	"CHRNA4", "CNTNAP2", "DAOA",	"DCC", "DISC1", "DLG2", "DRD2", "DTNBP1", "FOXP2", "GABRB1", "GAD67", "GNAO1", "GRIN2A", "GRM5", "GSK3B", "IL3", "MIR137", "MYT1L", "NEUROG1", "NOS3", "NPTN", "NRG1", "NRXN1", "PCM1", "PRNP", "RAB18", "RELN", "SEMA5A", "SLC1A2", "SLC6A4", "TP53", "TPH2",	"TRAX", "YWHAE", 	"ACTB", "ACTN1", "ACTN2", "ACTN3", "ACTN4", "ADCYAP1", "AKAP79", "APH1B", "ARNT2", "ASCL1", "AXIN2", "CAM", "CCDC88A", "CDK5", "CHD7", "CHL1", "CHN1", "CTNNB1", "DAO", "DCX", "DIXDC1", 	"DLG1", "DLG4","DRD1", "DSCAM", "DYRK1A", "ERBB2", "ERBB4", "EXOC1", "FAK", "FEZ1", "FEZF2", "FGFR1", "FRAT1", "FYN", "GAD65", "GPHN", "GPR37", "GRASP", "GRB2", "GRIA1", "GRIN1", "HAP1", "HELT", "HES1", "HIF1A", "HTT", "ITPR1", "ITPR3", "JUN", "KCNJ14", "KIF5A", "LSD1", "MADD2", "MASH1", "MEF2C", "MIR128", "MIR132", "MIR9", "MUPP1", "NDE1", "NDEL1","NEUROG2","NKX2-2", "NLGN1", "NOS3AS", "NOTCH1", "NPAS4", "NSF", "NTN1", "PAFAH1B1", "PDE4B", "PK2",	"PKD", "PLXNA2", "RAB3GAP1", "SHANK3", "SIAH1", "SOX2", "SRR", "STX1A", "TLX", "TNIK", "TSN",	"TUBB3", "VAMP7", "VLIP1", "ZNF365", "ZNF385A", "GRIN2B", "NECAB2", "TBX3", "KLF4", "RGS4", "PHOX2B", "HER5")
+
+csv <- write.csv(matrix_vl, "matrix_vl.csv")
+
+#Step3: replace greater than or equal to 1 values as 1 (for matrix created by simple method)
+matrix_simple>=1;
+matrix_simplemethod= (matrix_simple>=1);
+matrix_simple[matrix_simplemethod] = 1;
+csv <- write.csv(matrix_simplemethod, "matrix_simplemethod.csv")
+
+# replace greater than or equal to 1 values as 1 (for matrix created by vl method)
+matrix_vl>=1;
+matrix_vlmethod= (matrix_vl>=1);
+matrix_vl[matrix_vlmethod] = 1;
+csv <- write.csv(matrix_vl, "matrix_vlmethod.csv")
+
+# Step4:convert matrix (by simple method) to graph for graph theory analysis
+prenatal_direct_random_simple<-graph_from_adjacency_matrix(matrix_simplemethod, mode = c("undirected"),weighted = NULL, diag = TRUE,
+                                                           add.colnames = NULL, add.rownames = NA)
+
+plot(prenatal_direct_random_simple) 
+
+# convert matrix (by vl method) to graph to visualize# igraph analysis
+prenatal_direct_random_vl<-graph_from_adjacency_matrix(matrix_vlmethod, mode = c("undirected"),weighted = NULL, diag = TRUE,
+                                                       add.colnames = NULL, add.rownames = NA)
